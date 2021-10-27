@@ -17,12 +17,12 @@ void setup() {
   while (!leftMatrix.begin()) {
     Serial.print(" Left Error. MCP23017 not detected: 0x");
     Serial.println(leftMatrix.i2cAddress(), HEX);
-    delay(1000);
+    delay(100);
   }
   while (!rightMatrix.begin()) {
     Serial.println(" Right Error. MCP23017 not detected: 0x");
     Serial.println(rightMatrix.i2cAddress(), HEX);
-    delay(1000);
+    delay(100);
   }
   for (size_t r = 0; r < NUM_OF_ROW; r++) {
     for (size_t c = 0; c < NUM_OF_COLUMN; c++) {
@@ -95,16 +95,15 @@ void loop() {
     auto kc = keyMaps[currentLayer][e.row][e.col];
     auto layer = ((kc >> 8) & 0xF);
     if (e.pressed) {
-      if (e.keep == HOLD_THRESHOLD) {
-        if (layer != _QWERTY) {
-          currentLayer = layer;
-        } else {
-          Keyboard.press(kc);
-        }
+      if (layer == _QWERTY && e.keep == 1) {
+        Keyboard.press(kc);
+        debug_kc(e, true);
+      } else if (layer != _QWERTY && e.keep == HOLD_THRESHOLD) {
+        currentLayer = layer;
         debug_kc(e, true);
       }
     } else { // released
-      if (e.keep <= HOLD_THRESHOLD) {
+      if (layer != _QWERTY && e.keep <= HOLD_THRESHOLD) {
         Keyboard.press(kc);
         debug_kc(e, true);
       } else if (layer != _QWERTY) {

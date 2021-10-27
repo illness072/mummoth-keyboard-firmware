@@ -17,7 +17,7 @@ constexpr keycode_t KC_LSPC = LT(_LOWER, KC_SPC);
 constexpr keycode_t KC_RSPC = LT(_RAISE, KC_SPC);
 constexpr keycode_t KC_ASPC = LT(_ADJUST, KC_SPC);
 
-const PROGMEM keycode_t keyMaps[][NUM_OF_ROW * 2][NUM_OF_COLUMN] = {
+const keycode_t keyMaps[][NUM_OF_ROW * 2][NUM_OF_COLUMN] = {
   [_QWERTY] = LAYOUT_kc( \
   //,----+----+----+----+----+----.                        ,----+----+----+----+----+----.
      TAB , Q  , W  , E  , R  , T  ,                          Y  , U  , I  , O  , P  ,MINS,
